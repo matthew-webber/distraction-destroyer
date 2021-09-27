@@ -45,13 +45,13 @@ if [ "$EUID" -ne 0 ]; then
   exit
 fi
 
-# response variables
-declare -a tryagain=("Pardon?" "I don't understand..." "What?" "Umm..." "I don't have all day...")
-
 # prompt variables
 timeout=7
 countdown_message="🐲 Destruction shall commence in"
 choices='['"$bold"''"$underline"'e'"$normal"'dit/'"$bold"''"$underline"'q'"$normal"'uit]'
+
+# response variables
+declare -a tryagain=("Pardon?" "I don't understand..." "What?" "Umm..." "I don't have all day...")
 
 # format variables
 redc='\e[0;31m'
@@ -64,12 +64,8 @@ nonec='\e[0m'
 
 hostfile=/etc/hosts
 
-## put the domains of sites you want to block here
-declare -a domains=(
-				"facebook.com" 
-				"reddit.com"
-				#"twitter"
-				)
+# get the target domains from the domains file and put into array
+targets=( $(cat targets.txt) )
 
 # flag for script logic on flushing DNS
 # do not change!
@@ -106,13 +102,12 @@ ${redc}v1${bluec}           ,888)  \`Y8888P'
 # startup prompt
 printf "\n\n🐲 Know thy enemies and I shall detroy them.\n"
 echo -e "\n${underline}Targets${normal}"
-for domain in "${domains[@]}"
+for target in "${targets[@]}"
 do
-   printf "🎯 $domain\n"
+   printf "🎯 $target\n"
 done
 
-
-# read -n 1 -r -s -p $'\n🐲 Press enter to begin… ['"$bold"''"$underline"'e'"$normal"'dit/'"$bold"''"$underline"'q'"$normal"'uit]: ' resp
+printf "\n" # formatting
 
 opening_prompt "$countdown_message" "$choices" $timeout
 
@@ -122,26 +117,17 @@ case "$input" in
   [Qq]* ) echo -e '\n🐲 Farewell...'; exit;;
 esac
 
-while :
-   do
-      case "$resp" in
-         [Qq]* ) echo -e '\n🐲 Farewell...'; exit;;
-         "" ) break;;
-         * ) quip="$(random "tryagain[@]")"; read -n 1 -r -s -p $'\n🐲 '"$quip" resp;
-      esac
-   done
-
 printf "\n\n🐉 Let the slaying begin...\n\n"
 
 ## now loop through the above array
-for domain in "${domains[@]}"
+for target in "${targets[@]}"
 do
-   if grep -q $domain $hostfile; then
-   	printf "⏩ $domain already destroyed\n"
+   if grep -q $target $hostfile; then
+   	printf "⏩ $target already destroyed\n"
    else
-      echo "127.0.0.1 $domain" >> $hostfile
-      echo "127.0.0.1 www.$domain" >> $hostfile
-      printf "💀 $domain destroyed! 💀\n"
+      echo "127.0.0.1 $target" >> $hostfile
+      echo "127.0.0.1 www.$target" >> $hostfile
+      printf "💀 $target destroyed! 💀\n"
       flush=true
    fi
 done
@@ -156,9 +142,9 @@ printf "\n🐉 Destruction completed\n"
 read -n 1 -r -s -p $'\n🐲 Press enter to quit, r to resurrect all distractions.\n' resp
 case "$resp" in
 [Rr]* )
-   for domain in "${domains[@]}"
+   for target in "${targets[@]}"
    do
-      sed -i '' "/$domain/d" $hostfile
+      sed -i '' "/$target/d" $hostfile
    done
    msg="🌱 All distractions resurrected 🌱\n";;
  * )
