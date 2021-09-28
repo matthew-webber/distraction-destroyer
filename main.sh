@@ -52,6 +52,8 @@ choices='['"$bold"''"$underline"'e'"$normal"'dit/'"$bold"''"$underline"'q'"$norm
 
 # response variables
 declare -a tryagain=("Pardon?" "I don't understand..." "What?" "Umm..." "I don't have all day...")
+declare -a nochanges=("I saw nothing but the ghosts of your enemies." "You woke me up for this?" "Apparently they all died of fright.")
+declare -a changesmade=("Destruction completed." "Those distractions won't be bothering you anymore..." "The enemies of focus have been dispatched." "That was too easy..." "Are you not entertained?!")
 
 # format variables
 redc='\e[0;31m'
@@ -123,11 +125,11 @@ printf "\n\n🐉 Let the slaying begin...\n\n"
 for target in "${targets[@]}"
 do
    if grep -q $target $hostfile; then
-   	printf "⏩ $target already destroyed\n"
+   	printf "💀 $target already destroyed\n"
    else
       echo "127.0.0.1 $target" >> $hostfile
       echo "127.0.0.1 www.$target" >> $hostfile
-      printf "💀 $target destroyed! 💀\n"
+      printf "💥 $target destroyed! 💥\n"
       flush=true
    fi
 done
@@ -135,9 +137,15 @@ done
 if [ "$flush" = true ]; then
    printf "\n🚽 Flushing DNS cache\n"
    dscacheutil -flushcache
+   quip="$(random "changesmade[@]")";
+   printf '\n🐉 '"$quip";
+else
+   quip="$(random "nochanges[@]")";
+   printf '\n🐉 '"$quip";
 fi
+# quip="$(random "tryagain[@]")"; read -n 1 -r -s -p $'\n🐲 '"$quip" resp;
 
-printf "\n🐉 Destruction completed\n"
+
 
 read -n 1 -r -s -p $'\n🐲 Press enter to quit, r to resurrect all distractions.\n' resp
 case "$resp" in
@@ -152,4 +160,3 @@ case "$resp" in
 esac
 
 printf "\n$msg\n"
-printf "~~ƒiи~~\n"
