@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# sudo check
+if [ "$EUID" -ne 0 ]; then
+   error "You must run Distraction Destroyer as root.  Quitting..."
+   exit
+fi
+
 error() {
   printf '\E[31m'; echo "$@"; printf '\E[0m'
 }
@@ -21,36 +27,32 @@ function opening_prompt {
    local prompt=$1
    local choices=$2
    local timeout2=$3
+   local x=""
    # countdown starts
    for (( i=$timeout2; i>0; i--)); do
-      printf "\r${prompt} ${i} or ${choices}"
+      # printf "\r${prompt} ${i} or ${choices}"
+      # echo -en "\r${prompt} ${i} or ${choices}${x}\033[0K"
       case "$i" in
-         [4]* ) printf "\e[K🐉 Let the slaying.";;
-         [3]* ) printf "🐉 Let the slaying..";;
-         [2]* ) printf "🐉 Let the slaying...";;
-         [1]* ) printf "🐉 Let the slaying... begin!";;
+         [5-7]* ) echo -en "\033[K\r${prompt} ${i} or ${choices}${x}\033[K";;
+         [4]* ) x="\n🐉 Let the slaying."; echo -en "\033[K\r${prompt} ${i} or ${choices}${x}";;
+         [3]* ) x="\n🐉 Let the slaying.."; echo -en "\033[K\033[A\033[K\r${prompt} ${i} or ${choices}${x}";;
+         [2]* ) x="\n🐉 Let the slaying..."; echo -en "\033[K\033[A\033[K\r${prompt} ${i} or ${choices}${x}";;
+         [1]* ) x="\n🐉 Let the slaying... begin!"; echo -en "\033[K\033[A\033[K\r${prompt} ${i} or ${choices}${x}";;
       esac
       read -s -n 1 -t 1 waitresponse
       if [ $? -eq 0 ]
       then
         case "$waitresponse" in
-           [Qq]* ) input="q"; flag=true;; # quit
+           [Qq]* ) input="q"; break;; # quit
            [Ee]* ) input="e"; flag=true;; # edit
            "" ) input=""; flag=true;; # any key
            * ) : ;; # continue counting
         esac
       fi
-      if flag=true; then printf "\r${prompt} 0 or ${choices}"; printf "🐉 Let the slaying... begin!"; break; fi
+      if [ $flag = true ]; then printf "\r${prompt} 0 or ${choices}"; printf "🐉 Let the slaying... begin!\n"; break; fi
    done
 
 }
-
-
-# sudo check
-if [ "$EUID" -ne 0 ]; then
-   error "You must run Distraction Destroyer as root.  Quitting..."
-   exit
-fi
 
 # prompt variables
 timeout=7
