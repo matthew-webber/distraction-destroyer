@@ -84,15 +84,8 @@ opening_prompt() {
       if [ $? -eq 0 ]; then
          case "$waitresponse" in
          [Qq]*)
-            case "$i" in
-            [5-7]*) printf "\e[K\r${prompt} 0 or ${choices}${x}\e[K" ;;
-            *)
-               x="\n🐉 Let the slaying... oops nm!"
-               printf "\e[K\e[A\e[K\r${prompt} 0 or ${choices}${x}"
-               ;;
-            esac
             input="q"
-            break
+            flag=true
             ;; # quit
          [Ee]*)
             input="e"
@@ -110,8 +103,13 @@ opening_prompt() {
          esac
       fi
       if [ $flag = true ]; then
-         printf "\r${prompt} 0 or ${choices}"
-         printf "🐉 Let the slaying... begin!\n"
+         case "$i" in
+         [5-7]*) printf "\e[K\r${prompt} 0 or ${choices}${x}\e[K" ;;
+         *)
+            x="\n🐉 Let the slaying... oops nm!"
+            printf "\e[K\e[A\e[K\r${prompt} 0 or ${choices}${x}"
+            ;;
+         esac
          break
       fi
    done
@@ -163,6 +161,7 @@ case "$input" in
    nano targets.txt # edit the targets
    echo -e "\n🐲 Let's try that again, shall we?"
    sleep 2
+   printf "\e[1J"
    $0 # start the script over again
    exit
    ;;
