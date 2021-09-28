@@ -18,6 +18,7 @@ greenc='\e[1;32m'
 bluec='\e[1;34m'
 bold=$(tput bold)
 underline=$(tput smul)
+strikethrough='\e[9m'
 normal=$(tput sgr0)
 nonec='\e[0m'
 
@@ -30,7 +31,7 @@ choices='['"$bold"''"$underline"'e'"$normal"'dit/'"$bold"''"$underline"'r'"$norm
 declare -a tryagain=("Pardon?" "I don't understand..." "What?" "Umm..." "I don't have all day...")
 declare -a nochanges=("I found nothing but the ghosts of your enemies." "You woke me up for this?" "Apparently they all died of fright.")
 declare -a changesmade=("Destruction completed." "Those distractions won't be bothering you anymore..." "The enemies of focus have been dispatched." "That was too easy..." "Are you not entertained?!")
-
+declare -a resurrect=("Well you can kiss your focus goodbye!" "Grr...<insert dissuasive cliché here>" "As you wish... weakling...")
 hostfile=/etc/hosts
 
 # get the target domains from the domains file and put into array
@@ -49,6 +50,13 @@ ascii_banner() {
    printf "$@"
 }
 
+unblock_targets() {
+   for target in "${targets[@]}"; do
+      sed -i '' "/$target/d" $hostfile
+   done
+   msg="🌱 All distractions resurrected 🌱\n"
+}
+
 # pairs w/ prompt variables
 opening_prompt() {
    # timed prompt before script begins
@@ -59,24 +67,23 @@ opening_prompt() {
    local x=""
    # countdown starts
    for ((i = $timeout2; i > 0; i--)); do
-      # printf "\r${prompt} ${i} or ${choices}"
-      # echo -en "\r${prompt} ${i} or ${choices}${x}\033[0K"
+      # warning message
       case "$i" in
       [5-7]*) printf "\e[K\r${prompt} ${i} or ${choices}${x}\e[K" ;;
       [4]*)
-         x="\n🐉 Let the slaying."
+         x="\n🐉 Let the slaying.."
          printf "\e[K\r${prompt} ${i} or ${choices}${x}"
          ;;
       [3]*)
-         x="\n🐉 Let the slaying.."
+         x+=.
          printf "\e[K\e[A\e[K\r${prompt} ${i} or ${choices}${x}"
          ;;
       [2]*)
-         x="\n🐉 Let the slaying..."
+         x+=.
          printf "\e[K\e[A\e[K\r${prompt} ${i} or ${choices}${x}"
          ;;
       [1]*)
-         x="\n🐉 Let the slaying... begin!"
+         x+=" begin!"
          printf "\e[K\e[A\e[K\r${prompt} ${i} or ${choices}${x}"
          ;;
       esac
@@ -91,7 +98,7 @@ opening_prompt() {
             input="e"
             flag=true
             ;; # edit
-         [R]*)
+         [Rr]*)
             input="r"
             flag=true
             ;; # resurrect
@@ -106,7 +113,11 @@ opening_prompt() {
          case "$i" in
          [5-7]*) printf "\e[K\r${prompt} 0 or ${choices}${x}\e[K" ;;
          *)
-            x="\n🐉 Let the slaying... oops nm!"
+            if ["$input" = "r"]; then
+               x="\n🐉 Let the ${strikethrough}slaying${normal}healing... begin!"
+            else
+               x="\n🐉 Let the slaying... oops nm!"
+            fi
             printf "\e[K\e[A\e[K\r${prompt} 0 or ${choices}${x}"
             ;;
          esac
@@ -138,8 +149,8 @@ ${redc}v1${bluec}           ,888)  \`Y8888P'
   Y8b.        .dWARP'   \`Y8888888P
   \`Y88bo.  .od8888P'      \"YWARP'
    \`\"Y8888888888P\"'         \`\"'
-      \`\"Y8888P\"\"'  ${nonec}ASCII: warp.tmt.1997${bluec}
-         \`\"\"'      ${nonec}https://github.com/matthew-webber/distraction-destroyer
+      \`\"Y8888P\"\"'  ${normal}ASCII: warp.tmt.1997${bluec}
+         \`\"\"'      ${normal}https://github.com/matthew-webber/distraction-destroyer
 "
 
 # startup prompt
@@ -165,11 +176,24 @@ case "$input" in
    $0 # start the script over again
    exit
    ;;
+[Rr]*)
+   quip="$(random "resurrect[@]")"
+   printf '\n🐲 '"$quip"
+   sleep 2
+   # unblock_targets
+   for target in "${targets[@]}"; do
+      sed -i '' "/$target/d" $hostfile
+   done
+   printf "\n🌱 All distractions resurrected 🌱\n"
+   exit
+   ;;
 [Qq]*)
    echo -e '\n🐲 Farewell...'
    exit
    ;;
 esac
+
+printf "\n" # formatting bc noob
 
 ## now loop through the above array
 for target in "${targets[@]}"; do
@@ -194,17 +218,18 @@ else
 fi
 # quip="$(random "tryagain[@]")"; read -n 1 -r -s -p $'\n🐲 '"$quip" resp;
 
-read -n 1 -r -s -p $'\n🐲 Press enter to quit, r to resurrect all distractions.\n' resp
-case "$resp" in
-[Rr]*)
-   for target in "${targets[@]}"; do
-      sed -i '' "/$target/d" $hostfile
-   done
-   msg="🌱 All distractions resurrected 🌱\n"
-   ;;
-*)
-   msg="🐲 Stay focused, hero...\n"
-   ;;
-esac
+# read -n 1 -r -s -p $'\n🐲 Press enter to quit, r to resurrect all distractions.\n' resp
+# case "$resp" in
+# [Rr]*)
+#    for target in "${targets[@]}"; do
+#       sed -i '' "/$target/d" $hostfile
+#    done
+#    msg="🌱 All distractions resurrected 🌱\n"
+#    ;;
+# *)
+#    msg="🐲 Stay focused, hero...\n"
+#    ;;
+# esac
 
-printf "\n$msg\n"
+# printf "\n$msg\n"
+printf "\n🐲 Stay focused, hero...\n"
