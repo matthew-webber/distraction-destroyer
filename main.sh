@@ -11,48 +11,55 @@ random() {
 
 ascii_banner()
 {
-  # printf "${bold} %-40s ${normal}\n" "$@"
   printf "$@"
 }
 
+# pairs w/ prompt variables
 function opening_prompt {
-  local prompt=$1
-  local choices=$2
-  local timeout2=$3
-  for (( i=$timeout2; i>0; i--)); do
-      printf "\r${prompt} ${i} ${choices}"
+   # timed prompt before script begins
+   flag=false
+   local prompt=$1
+   local choices=$2
+   local timeout2=$3
+   # countdown starts
+   for (( i=$timeout2; i>0; i--)); do
+      printf "\r${prompt} ${i} or ${choices}"
+      case "$i" in
+         [4]* ) printf "\e[K🐉 Let the slaying.";;
+         [3]* ) printf "🐉 Let the slaying..";;
+         [2]* ) printf "🐉 Let the slaying...";;
+         [1]* ) printf "🐉 Let the slaying... begin!";;
+      esac
       read -s -n 1 -t 1 waitresponse
-      # if [ $? -eq 0 ]
-      # then
-      #     break
-      # fi
       if [ $? -eq 0 ]
       then
         case "$waitresponse" in
-           [Qq]* ) input="q"; break;;
-           [Ee]* ) input="e"; break;;
-           "" ) input=""; break;;
-           * ) : ;;
+           [Qq]* ) input="q"; flag=true;; # quit
+           [Ee]* ) input="e"; flag=true;; # edit
+           "" ) input=""; flag=true;; # any key
+           * ) : ;; # continue counting
         esac
       fi
-  done
+      if flag=true; then printf "\r${prompt} 0 or ${choices}"; printf "🐉 Let the slaying... begin!"; break; fi
+   done
+
 }
 
 
 # sudo check
 if [ "$EUID" -ne 0 ]; then
-  error "You must run Distraction Destroyer as root.  Quitting..."
-  exit
+   error "You must run Distraction Destroyer as root.  Quitting..."
+   exit
 fi
 
 # prompt variables
 timeout=7
 countdown_message="🐲 Destruction shall commence in"
-choices='['"$bold"''"$underline"'e'"$normal"'dit/'"$bold"''"$underline"'q'"$normal"'uit]'
+choices='['"$bold"''"$underline"'e'"$normal"'dit/'"$bold"''"$underline"'r'"$normal"'esurrect/'"$bold"''"$underline"'q'"$normal"'uit]'
 
 # response variables
 declare -a tryagain=("Pardon?" "I don't understand..." "What?" "Umm..." "I don't have all day...")
-declare -a nochanges=("I saw nothing but the ghosts of your enemies." "You woke me up for this?" "Apparently they all died of fright.")
+declare -a nochanges=("I found nothing but the ghosts of your enemies." "You woke me up for this?" "Apparently they all died of fright.")
 declare -a changesmade=("Destruction completed." "Those distractions won't be bothering you anymore..." "The enemies of focus have been dispatched." "That was too easy..." "Are you not entertained?!")
 
 # format variables
@@ -118,8 +125,6 @@ case "$input" in
   [Ee]* ) echo -e "\n🐲 Change your targets here..."; exit;;
   [Qq]* ) echo -e '\n🐲 Farewell...'; exit;;
 esac
-
-printf "\n\n🐉 Let the slaying begin...\n\n"
 
 ## now loop through the above array
 for target in "${targets[@]}"
