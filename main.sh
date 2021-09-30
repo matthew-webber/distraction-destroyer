@@ -57,7 +57,7 @@ unblock_targets() {
 # pairs w/ prompt variables
 opening_prompt() {
    # timed prompt before script begins
-   flag=false
+   exitnow=false
    local prompt=$1
    local choices=$2
    local countdown=$3
@@ -89,24 +89,24 @@ opening_prompt() {
          case "$waitresponse" in
          [Qq]*)
             input="q"
-            flag=true
+            exitnow=true
             ;; # quit
          [Ee]*)
             input="e"
-            flag=true
+            exitnow=true
             ;; # edit
          [Rr]*)
             input="r"
-            flag=true
+            exitnow=true
             ;; # resurrect
          "")
             input=""
-            flag=true
+            exitnow=true
             ;;     # any key
          *) : ;; # continue counting
          esac
       fi
-      if [ $flag = true ]; then
+      if [ $exitnow = true ]; then
          case "$i" in
          [4-6]*) printf "\e[K\r${prompt} 0 or ${choices}${x}\e[K" ;;
          *)
