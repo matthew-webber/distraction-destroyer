@@ -108,12 +108,18 @@ opening_prompt() {
       fi
       if [ $exitnow = true ]; then
          case "$i" in
-         [4-6]*) printf "\e[K\r${prompt} 0 or ${choices}${x}\e[K" ;;
+         [4-6]*) cursorDirectives="\e[K\r" ;;
          *)
-            x="\n🐉 Let the slaying... oops nm!"
-            printf "\e[K\e[A\e[K\r${prompt} 0 or ${choices}${x}"
+            cursorDirectives="\e[K\e[A\e[K\r"
             ;;
          esac
+         case "$input" in
+         "")
+            x="\n🐉 Let the slaying... begin!"
+            ;;
+         *) x="\n🐉 Let the slaying... oops nm!" ;;
+         esac
+         printf "${cursorDirectives}${prompt} 0 or ${choices}${x}"
          break
       fi
    done
