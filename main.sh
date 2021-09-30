@@ -1,5 +1,9 @@
 #!/bin/bash
 
+ascii_banner() {
+   printf "$@"
+}
+
 # format variables
 redc='\e[0;31m'
 greenc='\e[1;32m'
@@ -18,6 +22,32 @@ if [ "$EUID" -ne 0 ]; then
    error "You must run Distraction Destroyer as root.  Quitting..."
    exit
 fi
+
+ascii_banner "${bluec}      ....
+   ,od88888bo.
+ ,d88888888888b
+,dP\"\"'   \`\"Y888b       ,.
+d'         \`\"Y88b     .d8b. ,
+'            \`Y88[  , \`Y8P' db
+${redc}Distraction${bluec}   \`88b  Ybo,\`',d88)
+${redc}Destroyer${bluec}     ]88[ \`Y888888P\"
+${redc}v1${bluec}           ,888)  \`Y8888P'
+             ,d888[    \`\"\"'
+          .od8888P          ...
+     ..od88888888bo,      .d888b
+          \`\"\"Y888888bo. .d888888b
+.             \`Y88b\"Y88888P\"' \`Y8b
+:.             \`Y88[ \`\"\"\"'     \`88[
+|b              |88b            Y8b.
+\`8[             :888[ ,         :88)
+ Yb             :888) \`b.       d8P'
+ \`8b.          ,d888[  \`Ybo.  .d88[
+  Y8b.        .dWARP'   \`Y8888888P
+  \`Y88bo.  .od8888P'      \"YWARP'
+   \`\"Y8888888888P\"'         \`\"'
+      \`\"Y8888P\"\"'  ${normal}ASCII: warp.tmt.1997${bluec}
+         \`\"\"'      ${normal}https://github.com/matthew-webber/distraction-destroyer
+"
 
 # prompt variables
 countdown=7
@@ -41,10 +71,6 @@ flush=false
 random() {
    local arr=("${!1}")
    echo -e "${arr[$RANDOM % ${#arr[@]}]}"
-}
-
-ascii_banner() {
-   printf "$@"
 }
 
 unblock_targets() {
@@ -125,32 +151,6 @@ opening_prompt() {
    done
 
 }
-
-ascii_banner "${bluec}      ....
-   ,od88888bo.
- ,d88888888888b
-,dP\"\"'   \`\"Y888b       ,.
-d'         \`\"Y88b     .d8b. ,
-'            \`Y88[  , \`Y8P' db
-${redc}Distraction${bluec}   \`88b  Ybo,\`',d88)
-${redc}Destroyer${bluec}     ]88[ \`Y888888P\"
-${redc}v1${bluec}           ,888)  \`Y8888P'
-             ,d888[    \`\"\"'
-          .od8888P          ...
-     ..od88888888bo,      .d888b
-          \`\"\"Y888888bo. .d888888b
-.             \`Y88b\"Y88888P\"' \`Y8b
-:.             \`Y88[ \`\"\"\"'     \`88[
-|b              |88b            Y8b.
-\`8[             :888[ ,         :88)
- Yb             :888) \`b.       d8P'
- \`8b.          ,d888[  \`Ybo.  .d88[
-  Y8b.        .dWARP'   \`Y8888888P
-  \`Y88bo.  .od8888P'      \"YWARP'
-   \`\"Y8888888888P\"'         \`\"'
-      \`\"Y8888P\"\"'  ${normal}ASCII: warp.tmt.1997${bluec}
-         \`\"\"'      ${normal}https://github.com/matthew-webber/distraction-destroyer
-"
 
 # startup prompt
 printf "\n\n🐲 Know thy enemies and I shall detroy them\n"
