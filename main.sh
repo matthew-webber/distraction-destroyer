@@ -49,6 +49,18 @@ ${redc}v1${bluec}           ,888)  \`Y8888P'
          \`\"\"'      ${normal}https://github.com/matthew-webber/distraction-destroyer
 "
 
+# set sed syntax (Linux v macOS)
+case $OSTYPE in
+"linux"*)
+   sed_syntax='sed -i'
+   flush_command='systemd-resolve --flush-caches'
+   ;;
+"darwin"*)
+   sed_syntax='sed -i ""'
+   flush_command='dscacheutil -flushcache'
+   ;;
+esac
+
 # prompt variables
 countdown=7
 countdown_message="🐲 Destruction shall commence in"
@@ -74,10 +86,11 @@ random() {
 }
 
 unblock_targets() {
-   for target in "${targets[@]}"; do
-      sed -i '' "/$target/d" $hostfile
+   local arr=("${!1}")
+   for target in "${arr[@]}"; do
+      $sed_syntax "/$target/d" $hostfile
    done
-   msg="🌱 All distractions resurrected 🌱\n"
+   printf "\n🌱 All distractions resurrected 🌱\n"
 }
 
 # pairs w/ prompt variables
@@ -179,11 +192,7 @@ case "$input" in
    quip="$(random "resurrect[@]")"
    printf '\n🐲 '"$quip"
    sleep 2
-   # unblock_targets
-   for target in "${targets[@]}"; do
-      sed -i '' "/$target/d" $hostfile
-   done
-   printf "\n🌱 All distractions resurrected 🌱\n"
+   unblock_targets targets[@]
    sleep 1
    exit
    ;;
@@ -210,7 +219,7 @@ done
 
 if [ "$flush" = true ]; then
    printf "\n🚽 Flushing DNS cache\n"
-   dscacheutil -flushcache
+   $flush_command
    quip="$(random "changesmade[@]")"
    printf '\n🐉 '"$quip"
 else
