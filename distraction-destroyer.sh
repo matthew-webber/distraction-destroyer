@@ -169,7 +169,7 @@ opening_prompt() {
 }
 
 # startup prompt
-printf "\n\n🐲 Know thy enemies and I shall detroy them\n"
+printf "\n\n🐲 Know thy enemies and I shall destroy them\n"
 echo -e "\n${underline}Targets${normaltput}"
 for target in "${targets[@]}"; do
    printf "🎯 $target\n" # list targets
