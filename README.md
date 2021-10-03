@@ -1,5 +1,7 @@
 # distraction-destroyer 🕉
 
+![dd_demo](https://user-images.githubusercontent.com/37313243/135770532-f3fa0213-f5f9-4ae9-b766-0edd2dd032c4.gif)
+
 ## Overview
 
 Quickly add/remove distracting sites to your OS 'hosts' file
@@ -16,12 +18,20 @@ Quickly add/remove distracting sites to your OS 'hosts' file
 127.0.0.1 www.reddit.com
 ```
 
+## Purpose
+
 In its current form, DD is just a fun, lightweight solution for blocking time-wasting sites in your web browser by pointing them at the loopback address[²](#ref2) (127.0.0.1) in your OS's ```/etc/hosts``` file which causes them to fail.
 
 * ***Convenient*** - ***edit*** targets or ***unblock*** them from within DD
 * ***Automatic*** - DD will do its job automatically and then close — no user input required
 * ***Intuitive*** - If a site is already blocked, it will stay blocked.  Same goes for unblocking
 * ***Simple*** - DD uses a dead-simple process for blocking sites that has been around forever
+
+## Philosophy
+
+DD can be considered an alternative to popular "blocking apps" like the ironically named [SelfControl](https://github.com/SelfControlApp/selfcontrol) but with respect towards a user's autonomy.  DD won't stop you from going around it or undoing your changes (but it might give you a hard time!)
+
+The goal is to simply block the **initial** attempt to visit a trouble site in the hopes that your dopamine-hungry brain "snaps out of it" before you get sucked into mindless browsing.  If you actually need to visit the site, just [unblock](#unblocking-sites) it.
 
 ### Blocking sites
 
@@ -47,7 +57,6 @@ Editing targets is easy.  Either:
 <!-- 
 If your hosts file is not /etc/hosts then change it
 If bash isn't /bin/bash then change it
-Alternative to: selfcontrolapp.com
 Sharing: /r/nosurf /r/productivity /r/ADHD
  -->
 
