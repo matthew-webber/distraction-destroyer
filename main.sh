@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# ohm
 ascii_banner() {
    printf "$@"
 }
@@ -23,6 +24,7 @@ if [ "$EUID" -ne 0 ]; then
    exit
 fi
 
+# just for fun
 ascii_banner "${bluec}      ....
    ,od88888bo.
  ,d88888888888b
@@ -71,29 +73,30 @@ declare -a tryagain=("Pardon?" "I don't understand..." "What?" "Umm..." "I don't
 declare -a nochanges=("I found nothing but the ghosts of your enemies" "You woke me up for this?" "Apparently they all died of fright")
 declare -a changesmade=("Destruction completed" "Those distractions won't be bothering you anymore..." "The enemies of focus have been dispatched" "That was too easy..." "Are you not entertained?!")
 declare -a resurrect=("Well you can kiss your focus goodbye!" "Grr...<insert dissuasive cliché here>" "As you wish... weakling...")
-hostfile=/etc/hosts
 
-# get the target domains from the domains file and put into array
-targets=($(cat targets.txt))
+# important vars
+hostsfile=/etc/hosts
+this_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)" # for accurate rel. paths
+targetsfile=$this_dir/targets.txt
+targets=($(cat $targetsfile)) # get the target domains from the domains file and put into array
+flush=false                   # do not change! flag for script logic on flushing DNS
 
-# flag for script logic on flushing DNS
-# do not change!
-flush=false
-
+# for randomizing Destroyer speech
 random() {
    local arr=("${!1}")
    echo -e "${arr[$RANDOM % ${#arr[@]}]}"
 }
 
+# remove targets from the hosts file
 unblock_targets() {
    local arr=("${!1}")
    for target in "${arr[@]}"; do
-      $sed_syntax "/$target/d" $hostfile
+      $sed_syntax "/$target/d" $hostsfile
    done
    printf "\n🌱 All distractions resurrected 🌱\n"
 }
 
-# pairs w/ prompt variables
+# fn for prompt variables
 opening_prompt() {
    # timed prompt before script begins
    exitnow=false
@@ -126,23 +129,23 @@ opening_prompt() {
       read -s -n 1 -t 1 waitresponse
       if [ $? -eq 0 ]; then
          case "$waitresponse" in
-         [Qq]*)
+         [Qq]*) # quit
             input="q"
             exitnow=true
-            ;; # quit
-         [Ee]*)
+            ;;
+         [Ee]*) # edit
             input="e"
             exitnow=true
-            ;; # edit
-         [Rr]*)
+            ;;
+         [Rr]*) # resurrect
             input="r"
             exitnow=true
-            ;; # resurrect
-         "")
+            ;;
+         "") # continue
             input=""
             exitnow=true
-            ;;     # any key
-         *) : ;; # continue counting
+            ;;
+         *) : ;;
          esac
       fi
       if [ $exitnow = true ]; then
@@ -158,7 +161,7 @@ opening_prompt() {
             ;;
          *) x="\n🐉 Let the slaying... oops nm!" ;;
          esac
-         printf "${cursorDirectives}${prompt} 0 or ${choices}${x}"
+         printf "${cursorDirectives}${prompt} 0 or ${choices}${x}" # display clean final countdown msg
          break
       fi
    done
@@ -169,19 +172,20 @@ opening_prompt() {
 printf "\n\n🐲 Know thy enemies and I shall detroy them\n"
 echo -e "\n${underline}Targets${normaltput}"
 for target in "${targets[@]}"; do
-   printf "🎯 $target\n"
+   printf "🎯 $target\n" # list targets
 done
 
-printf "\n" # formatting
+printf "\n" # formatting bc i r noob
 
 opening_prompt "$countdown_message" "$choices" $countdown
 
 case "$input" in
-"") : ;; # continue
+"") echo -e "\n" ;; # formatting bc i r noob
 [Ee]*)
+   # user wanna edit
    echo -e "\n🐲 We'll start again when my objectives are clear..."
    sleep 2
-   nano targets.txt # edit the targets
+   nano $targetsfile # edit the targets
    echo -e "\n🐲 Let's try that again, shall we?"
    sleep 2
    printf "\e[1J"
@@ -189,6 +193,7 @@ case "$input" in
    exit
    ;;
 [Rr]*)
+   # distractions come alive
    quip="$(random "resurrect[@]")"
    printf '\n🐲 '"$quip"
    sleep 2
@@ -197,26 +202,26 @@ case "$input" in
    exit
    ;;
 [Qq]*)
+   # bump this
    echo -e '\n🐲 Farewell...'
    sleep 1
    exit
    ;;
 esac
 
-echo -e "\n" # formatting bc noob
-
-## now loop through the above array
+# add domains to hosts file
 for target in "${targets[@]}"; do
-   if grep -q $target $hostfile; then
+   if grep -q $target $hostsfile; then
       printf "💀 $target already destroyed\n"
    else
-      echo "127.0.0.1 $target" >>$hostfile
-      echo "127.0.0.1 www.$target" >>$hostfile
-      printf "💥 $target destroyed! 💥\n"
+      echo "127.0.0.1 $target" >>$hostsfile
+      echo "127.0.0.1 www.$target" >>$hostsfile
+      printf "💥 $target destroyed!\n"
       flush=true
    fi
 done
 
+# flush DNS so stored IPs of distractions get gone
 if [ "$flush" = true ]; then
    printf "\n🚽 Flushing DNS cache\n"
    $flush_command
@@ -227,5 +232,6 @@ else
    printf '\n🐉 '"$quip"
 fi
 
+# well wishes for your productivity
 printf "\n🐲 Stay focused, hero...\n"
 sleep 1
