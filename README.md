@@ -1,14 +1,20 @@
-🐲 Know thy enemies and I shall detroy them
+# distraction-destroyer 🕉
 
-## Getting Started
+## Overview
 
-### Prerequisites
+Quickly add/remove distracting sites to your OS 'hosts' file
+```bash
+# Example /etc/hosts file
 
-* A Unix-like OS environment (Mac/Linux) w/ administrative privileges
+# default stuff
+...
 
-## Using distraction-destroyer (DD)
-
-### Overview
+# distraction-destroyer's graveyard (blocked sites)
+127.0.0.1 facebook.com
+127.0.0.1 www.facebook.com
+127.0.0.1 reddit.com
+127.0.0.1 www.reddit.com
+```
 
 In its current form, DD is just a fun, lightweight solution for blocking time-wasting sites in your web browser by pointing them at the loopback address[²](#ref2) (127.0.0.1) in your OS's ```/etc/hosts``` file which causes them to fail.
 
