@@ -4,20 +4,27 @@
 
 ### Prerequisites
 
-* A Unix-like OS environment (Mac/Linux)
+* A Unix-like OS environment (Mac/Linux) w/ administrative privileges
 
-## Using distraction-destroyer (dd)
+## Using distraction-destroyer (DD)
 
-### Purpose
+### Overview
 
-In its current form, dd is just a fun, lightweight solution for blocking time-wasting sites in your web browser by pointing them at the loopback address[²](#ref2) (127.0.0.1) in your OS's ```/etc/hosts``` file.
+In its current form, DD is just a fun, lightweight solution for blocking time-wasting sites in your web browser by pointing them at the loopback address[²](#ref2) (127.0.0.1) in your OS's ```/etc/hosts``` file which causes them to fail.
 
-You can ***edit*** targets or ***unblock*** them from within the script, too.  Running the script multiple times isn't a problem -- if a site is already blocked, it will stay blocked.  Same goes for unblocking.
+* ***Convenient*** - ***edit*** targets or ***unblock*** them from within DD
+* ***Automatic*** - DD will do its job automatically and then close — no user input required
+* ***Intuitive*** - If a site is already blocked, it will stay blocked.  Same goes for unblocking
+* ***Simple*** - DD uses a dead-simple process for blocking sites that has been around forever
 
 ### Blocking sites
 
 1. run distraction-destroyer using ```sudo```
-2. after a short countdown, dd runs automatically and blocks all sites listed in ```targets.txt```.
+2. after a short countdown, dd runs automatically and blocks all sites listed in ```targets.txt```
+
+### Unblocking sites
+
+dd can "resurrect" / unblock sites for you by simply pressing ```r``` during the opening countdown, or you can always edit your ```/etc/hosts``` file yourself and remove the lines below ```#Distraction-Destroyer graveyard```
 
 ### Editing target sites
 
@@ -29,9 +36,7 @@ Editing targets is easy.  Either:
 
 ** (uses **nano** so remember to save your changes by pressing ```ctrl + x``` , ```y```)*
 
-### Unblocking sites
 
-dd can "resurrect" / unblock sites for you by simply pressing ```r``` during the opening countdown, but you can always edit your ```/etc/hosts``` file yourself if you choose.
 
 <!-- 
 If your hosts file is not /etc/hosts then change it
