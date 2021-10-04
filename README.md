@@ -17,14 +17,27 @@ In other words, use this script to:
 * [What it does](#what-it-does)
 * [Who it's for](#who-its-for)
 * [Philosophy](#philosophy)
+* [Install WSL for Windows](#install-wsl-for-windows)
 * [References](#references)
 
 ## Installation
-
-```
+### Mac/Linux
+```bash
 cd ~
 git clone https://github.com/matthew-webber/distraction-destroyer.git
 ```
+### Windows -_**requires [WSL 1/WSL 2](https://docs.microsoft.com/en-us/windows/wsl/about)**_
+
+If WSL is installed, open one of the below **as administrator**:
+* Command Prompt
+* Powershell
+* Windows Terminal
+```bash
+cd ~
+git clone https://github.com/matthew-webber/distraction-destroyer.git
+```
+
+If WSL is _not_ installed, see ["Install WSL on Windows"](#install-wsl-for-windows)
 
 Alternatively, you can install by downloading the project ZIP
 
@@ -92,6 +105,28 @@ DD is designed to be a simple tool for computer users of all backgrounds who lik
 DD can be considered an alternative to popular "blocking apps" like the ironically named [SelfControl](https://github.com/SelfControlApp/selfcontrol) but with respect towards a user's autonomy.  DD won't stop you from going around it or undoing your changes (but it might give you a hard time!)
 
 The goal is to simply block the **initial** attempt to visit a trouble site in the hopes that your dopamine-hungry brain "snaps out of it" before you get sucked into mindless browsing.  If you actually need to visit the site, just [unblock](#what-it-does) it.
+
+## Install WSL for Windows
+You can use DD by installing the "Windows Subsystem for Linux" (WSL) which allows you to run Linux commands and interact with the Windows OS.  While setup is a bit tedious and includes system resource overhead, the benefit is in knowing that running Linux for Windows is a safe, native solution supported by Microsoft.  
+
+The below are simplified instructions for installing the minimum amount of Linux (WSL 1) required to run DD along with a Linux Distro (the most popular distro in this case, Ubuntu).<a href="#shortcut-install">†</a>  Full instructions [here](https://docs.microsoft.com/en-us/windows/wsl/install)
+
+1. In the "Turn Windows features on or off" (Control Panel\Programs\Programs and Features) window, enable "Windows Subsystem for Linux"
+2. Reboot
+3. Install and run "Ubuntu" (or any other Linux distro) from the Microsoft Store app and create your username and password
+4. Close Ubuntu
+
+🎉 Congrats!  You've installed WSL! 🎉 
+
+🐲 Now back to [installing DD for Windows](#installation)...
+
+---
+
+<p id="shortcut-install"><em>† If you have the space on your machine, don't care about minimal installs, or just want the easy way: open Powershell as administrator and run the below which will install all of the above in addition to the "Virtual Machine Platform" (WSL2)</em></p>
+
+```
+wsl --install
+```
 
 ---
 
