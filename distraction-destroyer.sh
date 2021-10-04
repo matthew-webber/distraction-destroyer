@@ -51,9 +51,17 @@ ${redc}v1${bluec}           ,888)  \`Y8888P'
          \`\"\"'      ${normal}https://github.com/matthew-webber/distraction-destroyer
 "
 
-# set sed syntax (Linux v macOS)
+# set sed/flush/hosts syntax (Linux v macOS)
+hostsfile='/etc/hosts'
+
 case $OSTYPE in
 "linux"*)
+   case $(uname -a) in
+   *[Mm]"icrosoft"*)
+      hostsfile="/mnt/c/Windows/System32/drivers${hostsfile}"
+      flush_command="cmd.exe /c \"ipconfig /flushdns>nul\"" # silent DNS flush
+      ;;
+   esac
    sed_syntax='sed -i'
    flush_command='systemd-resolve --flush-caches'
    ;;
@@ -62,6 +70,9 @@ case $OSTYPE in
    flush_command='dscacheutil -flushcache'
    ;;
 esac
+
+this_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)" # for accurate rel. paths
+this_dir=$(echo $this_dir | sed 's/ /\\ /g')                               # eliminate spaces in path to this dir
 
 # prompt variables
 countdown=7
@@ -74,9 +85,7 @@ declare -a nochanges=("I found nothing but the ghosts of your enemies" "You woke
 declare -a changesmade=("Destruction completed" "Those distractions won't be bothering you anymore..." "The enemies of focus have been dispatched" "That was too easy..." "Are you not entertained?!")
 declare -a resurrect=("Well you can kiss your focus goodbye!" "Grr...<insert dissuasive cliché here>" "As you wish... weakling...")
 
-# important vars
-hostsfile=/etc/hosts
-this_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)" # for accurate rel. paths
+# other important variables
 targetsfile=$this_dir/targets.txt
 targets=($(cat $targetsfile)) # get the target domains from the domains file and put into array
 flush=false                   # do not change! flag for script logic on flushing DNS
