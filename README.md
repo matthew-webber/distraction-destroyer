@@ -93,8 +93,6 @@ DD can be considered an alternative to popular "blocking apps" like the ironical
 
 The goal is to simply block the **initial** attempt to visit a trouble site in the hopes that your dopamine-hungry brain "snaps out of it" before you get sucked into mindless browsing.  If you actually need to visit the site, just [unblock](#what-it-does) it.
 
-
-
 ---
 
 🐲 Stay focused, hero...
@@ -102,13 +100,11 @@ The goal is to simply block the **initial** attempt to visit a trouble site in t
 ---
 
 <details>
-<summary id="references">References</summary>
+ <summary id="references">References</summary>
 <p>
  
- 
 ¹ <a id="ref1" href="https://en.wikipedia.org/wiki/Localhost">Loopback address</a> (Wikipedia)
+ 
 ² <a id="ref2" href="https://en.wikipedia.org/wiki/Hosts_(file)#Extended_applications">Blocking internet resources</a> (ibid.)
-
-
 </p>
 </details>  
