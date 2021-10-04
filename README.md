@@ -106,9 +106,8 @@ The goal is to simply block the **initial** attempt to visit a trouble site in t
 <p>
  
  
-* ¹ <a id="ref1" href="https://en.wikipedia.org/wiki/Localhost">Loopback address</a>
- 
-* ² <a id="ref2" href="https://en.wikipedia.org/wiki/Hosts_(file)#Extended_applications">Blocking internet resources</a> (Wikipedia)
+¹ <a id="ref1" href="https://en.wikipedia.org/wiki/Localhost">Loopback address</a> (Wikipedia)
+² <a id="ref2" href="https://en.wikipedia.org/wiki/Hosts_(file)#Extended_applications">Blocking internet resources</a> (ibid.)
 
 
 </p>
