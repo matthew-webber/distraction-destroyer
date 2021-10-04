@@ -76,7 +76,7 @@ _**Before you start:**_ It is recommended that you create an alias to run distra
 
 ## What it does
 
-In its current form, DD is just a fun, lightweight solution for blocking time-wasting sites in your web browser by pointing them at the loopback address[²](#ref2) (127.0.0.1) in your OS's ```/etc/hosts``` file which causes them to fail.
+In its current form, DD is just a fun, lightweight solution for blocking time-wasting sites in your web browser by pointing them at the loopback address[¹](#ref1) (127.0.0.1) in your OS's ```/etc/hosts``` file which causes them to fail.[²](#ref2)
 
 * ***Convenient*** - ***edit*** targets or ***unblock*** them from within DD
 * ***Automatic*** - DD will do its job automatically and then close — no user input required
@@ -91,7 +91,7 @@ DD is designed to be a simple tool for computer users of all backgrounds who lik
 
 DD can be considered an alternative to popular "blocking apps" like the ironically named [SelfControl](https://github.com/SelfControlApp/selfcontrol) but with respect towards a user's autonomy.  DD won't stop you from going around it or undoing your changes (but it might give you a hard time!)
 
-The goal is to simply block the **initial** attempt to visit a trouble site in the hopes that your dopamine-hungry brain "snaps out of it" before you get sucked into mindless browsing.  If you actually need to visit the site, just [unblock](#unblocking-sites) it.
+The goal is to simply block the **initial** attempt to visit a trouble site in the hopes that your dopamine-hungry brain "snaps out of it" before you get sucked into mindless browsing.  If you actually need to visit the site, just [unblock](#what-it-does) it.
 
 
 
@@ -105,11 +105,11 @@ The goal is to simply block the **initial** attempt to visit a trouble site in t
 <summary id="references">References</summary>
 <p>
  
- * ¹ Hosts file (from Wikipedia):
+ 
+* ¹ <a id="ref1" href="https://en.wikipedia.org/wiki/Localhost">Loopback address</a>
+ 
+* ² <a id="ref2" href="https://en.wikipedia.org/wiki/Hosts_(file)#Extended_applications">Blocking internet resources</a> (Wikipedia)
 
-> The hosts file is one of several system facilities that assists in addressing network nodes in a computer network. It is a common part of an operating system's Internet Protocol (IP) implementation, and serves the function of translating human-friendly hostnames into numeric protocol addresses, called IP addresses, that identify and locate a host in an IP network.
-
-* ² <a name="ref2" href="https://en.wikipedia.org/wiki/Localhost">Loopback address</a>
 
 </p>
 </details>  
