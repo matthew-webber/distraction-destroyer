@@ -59,7 +59,7 @@ case $OSTYPE in
    case "$(uname -a)" in
    *[Mm]"icrosoft"*)
       hostsfile="/mnt/c/Windows/System32/drivers${hostsfile}"
-      flush_command="cmd.exe /c \"ipconfig /flushdns>nul\"" # silent DNS flush
+      flush_command="cmd.exe /c ipconfig /flushdns>nul" # silent DNS flush
       ;;
    *)
       flush_command='systemd-resolve --flush-caches'
