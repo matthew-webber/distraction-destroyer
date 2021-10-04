@@ -71,9 +71,6 @@ case $OSTYPE in
    ;;
 esac
 
-this_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)" # for accurate rel. paths
-this_dir=$(echo $this_dir | sed 's/ /\\ /g')                               # eliminate spaces in path to this dir
-
 # prompt variables
 countdown=7
 countdown_message="🐲 Destruction shall commence in"
@@ -86,9 +83,10 @@ declare -a changesmade=("Destruction completed" "Those distractions won't be bot
 declare -a resurrect=("Well you can kiss your focus goodbye!" "Grr...<insert dissuasive cliché here>" "As you wish... weakling...")
 
 # other important variables
-targetsfile=$this_dir/targets.txt
-targets=($(cat $targetsfile)) # get the target domains from the domains file and put into array
-flush=false                   # do not change! flag for script logic on flushing DNS
+this_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)" # for accurate rel. paths
+targetsfile="$this_dir"/targets.txt
+targets=($(cat "$targetsfile")) # get the target domains from the domains file and put into array
+flush=false                     # do not change! flag for script logic on flushing DNS
 
 # for randomizing Destroyer speech
 random() {
