@@ -44,7 +44,7 @@ Creating an alias (shortcut) to **distraction-destroyer** will allow you to quic
 echo -e "#distraction-destroyer shortcut (https://github.com/matthew-webber/distraction-destroyer)\nalias distraction-destroyer='sudo ~/distraction-destroyer/distraction-destroyer.sh'" >> ~/.zshrc && zsh
 ```
 
-#### bash (Linux, macOS 10.14 Mojave or earlier)
+#### bash (Linux, macOS 10.14 Mojave or earlier, Windows WSL1/WSL2)
 ```bash
 echo -e "#distraction-destroyer shortcut (https://github.com/matthew-webber/distraction-destroyer)\nalias distraction-destroyer='sudo ~/distraction-destroyer/distraction-destroyer.sh'" >> ~/.bashrc && bash
 ```

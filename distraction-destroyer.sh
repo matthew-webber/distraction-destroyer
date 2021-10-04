@@ -225,8 +225,6 @@ case $? in
 1*) echo "# distraction-destroyer graveyard (do not remove)" >>$hostsfile ;;
 esac
 
-# /RE/{G;s/$/This line is new/;}
-
 # add domains to hosts file
 for target in "${targets[@]}"; do
    if grep -q $target $hostsfile; then
