@@ -21,23 +21,14 @@ In other words, use this script to:
 * [References](#references)
 
 ## Installation
-### Mac/Linux
+### 🖥 Mac/Linux
 ```bash
 cd ~
 git clone https://github.com/matthew-webber/distraction-destroyer.git
-```
-### Windows -_**requires [WSL 1/WSL 2](https://docs.microsoft.com/en-us/windows/wsl/about)**_
+# ...
 
-If WSL is installed, open one of the below **as administrator**:
-* Command Prompt
-* Powershell
-* Windows Terminal
-```bash
-cd ~
-git clone https://github.com/matthew-webber/distraction-destroyer.git
+sudo ./distraction-destroyer/distraction-destroyer.sh
 ```
-
-If WSL is _not_ installed, see ["Install WSL on Windows"](#install-wsl-for-windows)
 
 Alternatively, you can install by downloading the project ZIP
 
@@ -46,18 +37,35 @@ Alternatively, you can install by downloading the project ZIP
 3. Rename the unzipped project folder as ```distraction-destroyer```.
 <p align="center"><img width="389" alt="Project ZIP location" src="https://user-images.githubusercontent.com/37313243/135775500-eb61acd0-5771-448c-92f2-5d13a3b31986.png"></p>
 
+### 💾 Windows - _**requires [WSL 1 / WSL 2](https://docs.microsoft.com/en-us/windows/wsl/about)**_
+
+**If WSL is installed**, open one of the below **as administrator**:
+* _Command Prompt_
+* _Powershell_
+* _Windows Terminal_ (bonus: emoji support 👍)
+```bash
+bash # will start the Bash terminal
+cd ~
+git clone https://github.com/matthew-webber/distraction-destroyer.git
+# ...
+
+sudo ./distraction-destroyer/distraction-destroyer.sh
+```
+
+**If WSL is _not_ installed**, see ["Install WSL for Windows"](#install-wsl-for-windows)
+
 ## Create a shortcut
 
 _**Note: after installing, it is highly recommended to create an alias (shortcut) to distraction-destroyer in your ~/.zshrc or ~/.bashrc file.**_
 
 Creating an alias (shortcut) to **distraction-destroyer** will allow you to quickly block sites from anywhere in the terminal (i.e. without being in the project root directory).  You can do so by copy+pasting the below into your terminal.
 
-#### zsh (macOS 10.15 Catalina or later)
+#### zsh (_macOS 10.15 Catalina or later_)
 ```zsh
 echo -e "#distraction-destroyer shortcut (https://github.com/matthew-webber/distraction-destroyer)\nalias distraction-destroyer='sudo ~/distraction-destroyer/distraction-destroyer.sh'" >> ~/.zshrc && zsh
 ```
 
-#### bash (Linux, macOS 10.14 Mojave or earlier, Windows WSL1/WSL2)
+#### bash (_macOS 10.14 Mojave or earlier, Linux, Windows WSL 1 / WSL 2_)
 ```bash
 echo -e "#distraction-destroyer shortcut (https://github.com/matthew-webber/distraction-destroyer)\nalias distraction-destroyer='sudo ~/distraction-destroyer/distraction-destroyer.sh'" >> ~/.bashrc && bash
 ```
@@ -65,6 +73,15 @@ echo -e "#distraction-destroyer shortcut (https://github.com/matthew-webber/dist
 ## Using distraction-destroyer (DD)
 
 _**Before you start:**_ It is recommended that you create an alias to run distraction-destroyer from the terminal without being in the project root.  See [Create a shortcut](#create-a-shortcut) above.
+
+_**To run DD after installation**_:
+```bash
+# No alias/shortcut
+sudo ./distraction-destroyer/distraction-destroyer.sh
+
+# Shortcut/alias
+sudo distraction-destroyer
+```
 
 ---
 ### 🙅‍♂️ Blocking sites
