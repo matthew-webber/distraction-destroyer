@@ -209,13 +209,22 @@ case "$input" in
    ;;
 esac
 
+# add comment separator if not already in /etc/hosts
+cat /etc/hosts | grep -q "# distraction-destroyer graveyard"
+case $? in
+0*) : ;;
+1*) echo "# distraction-destroyer graveyard (do not remove)" >>/etc/hosts ;;
+esac
+
+# /RE/{G;s/$/This line is new/;}
+
 # add domains to hosts file
 for target in "${targets[@]}"; do
    if grep -q $target $hostsfile; then
       printf "💀 $target already destroyed\n"
    else
-      echo "127.0.0.1 $target" >>$hostsfile
-      echo "127.0.0.1 www.$target" >>$hostsfile
+      $sed_syntax "/# distraction-destroyer graveyard/{G;s/$/127.0.0.1 $target/;}" $hostsfile
+      $sed_syntax "/# distraction-destroyer graveyard/{G;s/$/127.0.0.1 www.$target/;}" $hostsfile
       printf "💥 $target destroyed!\n"
       flush=true
    fi
