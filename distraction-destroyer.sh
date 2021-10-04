@@ -59,7 +59,7 @@ case $OSTYPE in
    case "$(uname -a)" in
    *[Mm]"icrosoft"*)
       hostsfile="/mnt/c/Windows/System32/drivers${hostsfile}"
-      flush_command="/mnt/c/Windows/System32/cmd.exe /c 'ipconfig /flushdns>nul' 2>/dev/null" # silent DNS flush / UNC path warning
+      flush_command='cmd.exe /c ipconfig /flushdns>nul' # silent DNS flush
       ;;
    *)
       flush_command='systemd-resolve --flush-caches'
@@ -240,7 +240,7 @@ done
 # flush DNS so stored IPs of distractions get gone
 if [ "$flush" = true ]; then
    printf "\n🚽 Flushing DNS cache\n"
-   $flush_command
+   $flush_command 2>/dev/null
    quip="$(random "changesmade[@]")"
    printf '\n🐉 '"$quip"
 else
