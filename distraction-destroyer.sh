@@ -56,14 +56,16 @@ hostsfile='/etc/hosts'
 
 case $OSTYPE in
 "linux"*)
-   case $(uname -a) in
+   case "$(uname -a)" in
    *[Mm]"icrosoft"*)
       hostsfile="/mnt/c/Windows/System32/drivers${hostsfile}"
       flush_command="cmd.exe /c \"ipconfig /flushdns>nul\"" # silent DNS flush
       ;;
+   *)
+      flush_command='systemd-resolve --flush-caches'
+      ;;
    esac
    sed_syntax='sed -i'
-   flush_command='systemd-resolve --flush-caches'
    ;;
 "darwin"*)
    sed_syntax='sed -i ""'
@@ -216,11 +218,11 @@ case "$input" in
    ;;
 esac
 
-# add comment separator if not already in /etc/hosts
-cat /etc/hosts | grep -q "# distraction-destroyer graveyard"
+# add comment separator if not already in hosts
+cat $hostsfile | grep -q "# distraction-destroyer graveyard"
 case $? in
 0*) : ;;
-1*) echo "# distraction-destroyer graveyard (do not remove)" >>/etc/hosts ;;
+1*) echo "# distraction-destroyer graveyard (do not remove)" >>$hostsfile ;;
 esac
 
 # /RE/{G;s/$/This line is new/;}
