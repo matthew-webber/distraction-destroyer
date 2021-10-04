@@ -7,7 +7,7 @@ In other words, use this script to:
 * unblock / remove sites added to ```/etc/hosts```
 * edit the list of sites to block in a minimal .txt file
 
-![dd_demo](https://user-images.githubusercontent.com/37313243/135770532-f3fa0213-f5f9-4ae9-b766-0edd2dd032c4.gif)
+<p align="center"><img src="https://user-images.githubusercontent.com/37313243/135770532-f3fa0213-f5f9-4ae9-b766-0edd2dd032c4.gif"></p>
  
 ## Overview
 
@@ -31,7 +31,7 @@ Alternatively, you can install by downloading the project ZIP
 1. Navigate to the top of this page and click 'Code' > 'Download ZIP'
 2. Save the file as-is in your [home folder](https://nektony.com/blog/mac-home-folder#1)
 3. Rename the unzipped project folder as ```distraction-destroyer```.
-<img width="389" alt="Project ZIP location" src="https://user-images.githubusercontent.com/37313243/135775500-eb61acd0-5771-448c-92f2-5d13a3b31986.png">
+<p align="center"><img width="389" alt="Project ZIP location" src="https://user-images.githubusercontent.com/37313243/135775500-eb61acd0-5771-448c-92f2-5d13a3b31986.png"></p>
 
 ## Create a shortcut
 
